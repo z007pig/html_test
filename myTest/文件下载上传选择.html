@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style type="text/css">
+
+</style>
+<!--   引入jQuery -->
+<script src="js/jquery.js" type="text/javascript"></script>
+<script language="vbscript">
+Function Foder()
+Const MY_COMPUTER = &H11&
+Const WINDOW_HANDLE = 0
+Const OPTIONS = 0
+
+Set objShell = CreateObject("Shell.Application")
+Set objFolder = objShell.Namespace(MY_COMPUTER)
+Set objFolderItem = objFolder.Self
+strPath = objFolderItem.Path
+
+Set objShell = CreateObject("Shell.Application")
+Set objFolder = objShell.BrowseForFolder _
+(WINDOW_HANDLE, "请选择文件夹:", OPTIONS, strPath) 
+
+If objFolder Is Nothing Then
+exit Function
+End If
+
+Set objFolderItem = objFolder.Self
+objPath = objFolderItem.Path
+
+document.frmList.FODER_PATH.value = objPath
+
+End Function
+</script>
+
+</head>
+<body>
+	<input type = "button" name = "path" size = "100" onclick="Foder()" value="选择文件夹" />
+
+<!-- 客户导入选择文件就用file就可以 -->
+<input type="file" name="DATA_RESTORE_PATH" maxlength="20" style="WIDTH: 100px" >
+</body>
+</html>

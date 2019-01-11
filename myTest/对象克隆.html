@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>测试</title>
+<script type="text/javascript" src="js/jquery-1.8.1.js"></script>
+
+</head>
+<body>
+	
+	<div id="newpic">
+		<div id="cgcolor" style="width:100px;height:100px;border-radius:50%;"></div>
+		&nbsp;
+	</div>
+	<input id="fgd" ></input>
+	<input id="ggd" ></input>
+	<input id="bbn" ></input>
+<script>
+	var a= new Object();
+	a.b=new Object();
+	a.b.c=3;
+	var d=$.extend(true,{},a);
+	d.b.c=4;
+	console.log(a.b.c,d.b.c);
+</script>
+</body>
+</html>

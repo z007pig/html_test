@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>textarea自适应高度</title>
+<style>
+textarea {
+    border: 1px solid #a0b3d6;
+    overflow: auto;
+     height:auto;
+    /*高度值根据屏幕高度设置，是为了防止文本框高度大于屏幕高度后再点击换行或空格时，页面自动定位到文本框顶端，那么页底文字就看不到的情况。    这也是该方法缺点之一，上一个方法就不会出现这个问题*/
+    padding: 0;
+    background-color: #fff;
+    margin-top:0px;
+    width:500px;
+}
+
+.textarea{
+        width: 99%; 
+        min-height: 20px; 
+        _height: 120px; 
+        margin-left: auto; 
+        margin-right: auto; 
+        padding: 3px; 
+        outline: 0; 
+        border: 1px solid #a0b3d6; 
+        font-size: 12px; 
+        line-height: 24px;
+        padding: 2px;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        border-color: rgba(171,173,179, 0.8);
+    }
+</style>
+</head>
+
+<body>
+<textarea id="textId"></textarea>
+
+<div id="divId" class="textarea" style="margin-top:0px;" contenteditable="true">
+    <br />
+</div>
+
+<textarea id="text"></textarea>
+<script type="text/javascript">
+//兼容IE，防止文本框高度大于屏幕高度后再点击换行或空格时，页面自动定位到文本框顶端，那么页底文字就看不到的情况
+//解决项目流程的文本框问题
+var scrollHeight = 0;
+document.getElementById("text").onkeyup = function () {
+    this.style.height = this.scrollHeight+ "px";
+}
+</script>
+
+</body>
+<script src="js/jquery.js"></script>
+<script>
+jQuery.fn.extend({
+    autoHeight: function(){
+        return this.each(function(){
+			var $this = jQuery(this);
+			var scrollHeight = this.scrollHeight;
+            if( !$this.attr('_initAdjustHeight') ){
+                $this.attr('_initAdjustHeight', $this.outerHeight());
+            }
+            _adjustH(this).on('input', function(){
+                _adjustH(this);
+            });
+        });
+        /**
+         * 重置高度 
+         * @param {Object} elem
+         */
+        function _adjustH(elem){
+            var $obj = jQuery(elem);
+            return $obj.css({'height': $obj.attr('_initAdjustHeight'), 'overflow-y': 'hidden'})
+                    .height( elem.scrollHeight );
+        }
+    }
+});
+
+$(document).ready(function(){
+	$("#textId").autoHeight();
+});
+</script>
+
+</html>

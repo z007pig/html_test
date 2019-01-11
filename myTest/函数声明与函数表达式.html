@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>函数声明与函数表达式</title>
+<script type="text/javascript" src="js/jquery-1.8.1.js"></script>
+
+</head>
+<body>
+	
+	<div id="newpic">
+		<div id="cgcolor" style="width:500px;height:100px;border-radius:50%;">解析器在向执行环 
+境中加载数据时，对函数声明和函数表达式并非一视同仁。解析器会率先读取函数声明，并使其在执行 9 
+
+任何代码之前可用（可以访问）；至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真 
+
+正被解释执行。</div>
+		&nbsp;
+	</div>
+	<input id="fgd" ></input>
+	<input id="ggd" ></input>
+	<input id="bbn" ></input>
+<script>
+	//正确
+	alert(sum(10,10)); 
+    function sum(num1, num2){ 
+        return num1 + num2; 
+    } 
+	
+	//就会报错
+	 //alert(sum(10,10)); 
+   // var sum = function(num1, num2){ 
+     //   return num1 + num2; 
+   // }; 
+   //函数位于一个初始化语句中，而不是一个函数声明。
+   //换句话说，在执行到函数所在的语句之前，变量sum 中不会保存有对函数的引用；
+   //而且，由于第一 行代码就会导致“unexpected identifier”（意外标识符）错误，实际上也不会执行到下一行。 
+   // 除了什么时候可以通过变量访问函数这一点区别之外，函数声明与函数表达式的语法其实是等价的。
+</script>
+</body>
+</html>

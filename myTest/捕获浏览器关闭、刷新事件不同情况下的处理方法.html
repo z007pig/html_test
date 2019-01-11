@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+table {
+border-collapse: collapse;
+}
+
+td {
+width: 200px;
+height: 50px;
+border: 1px solid #D9D9D9;
+}
+
+.grayColor {
+background: #f2f2f2;
+}
+</style>
+</head>
+
+<body>
+<textarea cols="" rows="" id="text"></textarea>
+<table>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td colspan="2"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td rowspan="2"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+window.onbeforeunload=function (){ 
+alert("===onbeforeunload==="); 
+if(event.clientX>document.body.clientWidth && event.clientY < 0 || event.altKey){ 
+alert("你关闭了浏览器"); 
+}else{ 
+alert("你正在刷新页面"); 
+} 
+} 
+
+</script>
+
+</html>

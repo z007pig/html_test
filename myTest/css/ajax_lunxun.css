@@ -1,0 +1,52 @@
+﻿body{
+	
+	margin:0;
+	
+}
+.box1{
+	position:relative;
+	margin-top:100px;
+	margin-left:100px;
+	border: 1px solid #555;
+	height:200px;
+	width:200px;
+} 
+.yuan{
+	position:absolute;
+	width:5px;
+	height:5px;
+	border-radius:50%;
+	border: 2px solid #555;
+}
+.yuan_1{
+	top:0;
+	left:0;
+}
+.yuan_2{
+	top:0;
+	left:50%;
+}
+.yuan_3{
+	top:0;
+	left:100%;
+}
+.yuan_4{
+	top:50%;
+	left:100%;
+}
+.yuan_5{
+	top:100%;
+	left:100%;
+}
+.yuan_6{
+	top:100%;
+	left:50%;
+}
+.yuan_7{
+	top:100%;
+	left:0;
+}
+.yuan_8{
+	top:50%;
+	left:0;
+}

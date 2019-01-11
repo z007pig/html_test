@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style type="text/css">
+* { margin:0; padding:0; }
+div.centent {
+   float:left;
+   text-align: center;
+   margin: 10px;
+}
+span { 
+	display:block; 
+	margin:2px 2px;
+	padding:4px 10px; 
+	background:#898989;
+	cursor:pointer;
+	font-size:12px;
+	color:white;
+}
+</style>
+<!--   引入jQuery -->
+<script src="js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	//移到右边
+	$('#add').click(function() {
+	//获取选中的选项，删除并追加给对方
+	//$('#select1 option:selected').appendTo('#select2');
+		var toright = $('#select1 option:selected');
+		if($('#select2 option').length == 0){
+			toright.appendTo('#select2');
+		}
+		else{
+			for(var j=0;j<toright.length;j++){
+				for(var i=0;i<$('#select2 option').length;i++){
+					if(parseInt($(toright[j]).val())<parseInt($('#select2 option').eq(i).val())){
+						//toright为jq对象 toright[j]为dom对象  无法调用val()方法 需要转换为jq对象
+						$(toright[j]).insertBefore($('#select2 option').eq(i));
+						break; //匹配成功跳出循环  不在执行
+					}
+					else if(parseInt($(toright[j]).val())>parseInt($('#select2 option:last').val())){
+						$(toright[j]).appendTo('#select2');
+					}
+				}
+			}
+		}
+	});
+	//移到左边
+	$('#remove').click(function() {
+		//$('#select2 option:selected').appendTo('#select1');
+		var toleft = $('#select2 option:selected');
+		if($('#select1 option').length == 0){
+			toleft.appendTo('#select1');
+		}
+		else{
+			for(var j=0;j<toleft.length;j++){
+				for(var i=0;i<$('#select1 option').length;i++){
+					if(parseInt($(toleft[j]).val())<parseInt($('#select1 option').eq(i).val())){
+						$(toleft[j]).insertBefore($('#select1 option').eq(i));
+						break; //匹配成功跳出循环  不在执行
+					}
+					else if(parseInt($(toleft[j]).val())>parseInt($('#select1 option:last').val())){
+						$(toleft[j]).appendTo('#select1');
+					}
+				}
+			}
+		}
+	});
+	//全部移到右边
+	$('#add_all').click(function() {
+		//获取全部的选项,删除并追加给对方
+		$('#select1 option').appendTo('#select2');
+	});
+	//全部移到左边
+	$('#remove_all').click(function() {
+		$('#select2 option').appendTo('#select1');
+	});
+	//双击选项
+	$('#select1').dblclick(function(){ //绑定双击事件
+		//获取全部的选项,删除并追加给对方
+		$("option:selected",this).appendTo('#select2'); //追加给对方
+	});
+	//双击选项
+	$('#select2').dblclick(function(){
+	   $("option:selected",this).appendTo('#select1');
+	});
+});
+</script>
+
+</head>
+<body>
+	<div class="centent">
+		<select multiple="multiple" id="select1" style="width:100px;height:160px;">
+			<option value="1">选项1</option>
+			<option value="2">选项2</option>
+			<option value="3">选项3</option>
+			<option value="4">选项4</option>
+			<option value="5">选项5</option>
+			<option value="6">选项6</option>
+			<option value="7">选项7</option>
+			<option value="8">选项8</option>
+		</select>
+		<div>
+			<span id="add" >选中添加到右边&gt;&gt;</span>
+			<span id="add_all" >全部添加到右边&gt;&gt;</span>
+		</div>
+	</div>
+
+	<div class="centent">
+		<select multiple="multiple" id="select2" style="width: 100px;height:160px;">
+			
+		</select>
+		<div>
+			<span id="remove">&lt;&lt;选中删除到左边</span>
+			<span id="remove_all">&lt;&lt;全部删除到左边</span>
+		</div>
+	</div>
+
+
+</body>
+</html>

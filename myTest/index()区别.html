@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>测试</title>
+<script type="text/javascript" src="js/jquery-1.8.1.js"></script>
+<style type="text/css">
+	.cgcolor{
+		width:100px;
+		height:100px;
+		border-radius:50%;
+		border:1px solid #555;
+		float:left;
+		text-align:center;
+		line-height:100px;
+	}
+	#ceshi{
+		border:1px solid #ff0000;
+	}
+</style>
+</head>
+<body>
+	
+	<div class="newpic" >
+		<div class="cgcolor" ></div>
+		<div id="ceshi" class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+	</div>
+	<div class="newpic" >
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+	</div>
+	<div class="newpic" >
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+		<div class="cgcolor" ></div>
+	</div>
+	<video controls width="600" autoplay id="v">
+    <source src="1.aac">
+    您的浏览器不支持video标签播放视频
+	</video>
+	<script>
+		$(".cgcolor").click(function(){
+			//相对于同胞元素
+			var a = $(this).index();
+			//获得元素相对于选择器的 index 位置
+			var b = $(".cgcolor").index(this);
+			var c = $(".cgcolor").index($("#ceshi"));
+			
+			var d = a +"&"+ b +"&"+ c;
+			$(this).html(d);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>测试</title>
+<script type="text/javascript" src="js/jquery-1.8.1.js"></script>
+
+
+
+</head>
+<body>
+	
+	<div id="newpic">
+		<div id="cgcolor" style="width:100px;height:100px;border-radius:50%;"></div>
+		&nbsp;
+	</div>
+	<input id="fgd" ></input>
+	<input id="ggd" ></input>
+	<input id="bbn" ></input>
+	<script>
+	$("#fgd").blur(function(e){
+    		
+			var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g; //匹配IP地址的正则表达式
+			if(re.test($("#fgd").val()))
+			{
+				if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) {$("#cgcolor").html("0");;}
+				else{
+					$("#cgcolor").html("1");
+					
+				}
+			}
+			else{
+					$("#cgcolor").html("2");
+				}
+			
+    	});
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<div id="foo" class="xxx"></div>hello<p id="foo2"></p><!-- comment -->
+<script>
+    //元素节点 nodeType = 1
+    console.log("元素节点",
+				document.getElementById('foo').nodeType,
+				document.getElementById('foo').nodeName,
+				document.getElementById('foo').nodeValue
+				); 
+    //属性节点 nodeType = 2
+    console.log("属性节点",
+				document.getElementById('foo').attributes['id'].nodeType,
+				document.getElementById('foo').attributes['id'].nodeName,
+				document.getElementById('foo').attributes['id'].nodeValue
+				);
+    //文本节点 nodeType = 3
+    console.log("文本节点",
+				document.getElementById('foo').nextSibling.nodeType,
+				document.getElementById('foo').nextSibling.nodeName,
+				document.getElementById('foo').nextSibling.nodeValue
+			   );
+    //注释节点 nodeType = 8
+    console.log("注释节点",
+				document.getElementById('foo2').nextSibling.nodeType,
+				document.getElementById('foo2').nextSibling.nodeName,
+				document.getElementById('foo2').nextSibling.nodeValue
+				);
+    //文档节点 nodeType = 9
+    console.log("文档节点",
+				document.nodeType,
+				document.nodeName,
+				document.nodeValue
+				);
+    //fragment节点 nodeType = 11
+    console.log("fragment节点",
+				(document.createDocumentFragment()).nodeType,
+				(document.createDocumentFragment()).nodeName,
+				(document.createDocumentFragment()).nodeValue
+				);
+</script>
+</body>
+</html>

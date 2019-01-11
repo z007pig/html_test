@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>测试</title>
+<script type="text/javascript" src="js/jquery-1.8.1.js"></script>
+
+
+
+</head>
+<body>
+
+	<div id="newpic">
+		<div id="cgcolor" style="width:100px;height:100px;border-radius:50%;"></div>
+		&nbsp;
+	</div>
+	<form id="ff"> 
+		<input id="fgd"  name="loginName" value="xuesheng"></input>
+		<input id="ggd"  name="password" value="1"></input>
+	</form> 
+		<button id="ddd"  > 登录</button>
+		
+	
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+	var datass=[{'status':0,'hq':[['2017-01-09','3148.53','3171.24','16.92','0.54%','3147.74','3173.14','171714080','19211058.00','-'],['2017-01-06','3163.78','3154.32','-11.09','-0.35%','3153.03','3172.03','183708960','20729604.00','-'],['2017-01-05','3157.91','3165.41','6.62','0.21%','3154.28','3168.50','174727632','19969202.00','-'],['2017-01-04','3133.79','3158.79','22.87','0.73%','3130.11','3160.10','167860848','19591428.00','-'],['2017-01-03','3105.31','3135.92','32.28','1.04%','3105.31','3136.46','141567184','15988715.00','-']],'code':'zs_000001','stat':['累计:','2017-01-03至2017-01-09','67.60','2.18%',3105.31,3173.14,839578704,95490007,'-']}];
+ //datass = JSON.parse(datass);
+	var datadd=[];
+for(var i=0;i<datass[0].hq.length;i++){
+  var datacc=[];
+  datacc.push(datass[0].hq[i][1]);
+  datacc.push(datass[0].hq[i][2]);
+  datacc.push(datass[0].hq[i][5]);
+  datacc.push(datass[0].hq[i][6]);
+  datadd.push(datacc);
+}
+console.log(datadd);
+ $.ajax({
+                type: "post",
+                url: "http://localhost:8080/jp-web/pub/admin/system/enclosure/Downloadfile.do",
+				data:{"fileid":"9156e08f-baa4-46df-b6fe-be5fbee6398c"},
+                success: function (data) {
+				alert(1);
+				console.log(data);
+                }
+            });
+	//var dfg= "http://q.stock.sohu.com/hisHq?code=zs_000001&start=20170101&end=20170109&stat=1&order=D&period=d&callback=historySearchHandler&rt=jsonp";
+		$("#ddd").click(function(){
+
+		var mane = $("#fgd").val();
+		var mima = $("#ggd").val();
+
+		 var params = $("#ff").serializeArray(); 
+		 var j = {}; 
+		 for (var item in params) { 
+		   j[params[item].name] = params[item].value; 
+		 } 
+		 $.ajax({
+                type: "post",
+                url: "http://123.57.51.107/wxJavaPlat/pub/admin/login1.do",
+                data: {'username':mane,'password':mima},
+                success: function (data) {
+                   sessionStorage.setItem("userId",data.userId);
+				   sessionStorage.setItem("token",data.token);
+				   window.loction.href="";
+                }
+            });
+		});
+	});
+	
+	
+
+</script>
+</html>
