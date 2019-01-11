@@ -1,0 +1,49 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+		</style>
+		<script src="bootstrap/js/bootstrap.js">
+		</script>
+		<script src="chart/Chart.Core.js">
+		</script>
+		<script src="chart/Chart.Line.js">
+		</script>
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="row" style="margin:0 20px;">
+        <div class="col-md-8 col-sm-10 col-xs-12">
+		<canvas id="canvas" height="300" width="600"></canvas>
+		</div>
+		</div>
+		<script>
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["January","February","March","April","May","June","July"],
+			datasets : [
+				{
+					label: "My First dataset",
+					fillColor : "rgba(41,41,0,1)",
+					strokeColor : "rgba(205,204,0,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+				}
+			]
+
+		}
+
+		window.onload = function(){
+			var ctx = document.getElementById("canvas").getContext("2d");
+			window.myLine = new Chart(ctx).Line(lineChartData, {
+				responsive: true,scaleShowLabels:false,showScale:false,
+				datasetStrokeWidth:10
+			});
+		}
+	</script>
+	</body>
+</html>

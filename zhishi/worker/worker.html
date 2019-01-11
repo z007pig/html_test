@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/jquery.js"></script>
+	<script>
+		var w;
+
+		function startWorker(f)
+		{
+			if(typeof(Worker)!=="undefined")
+			{
+				if(typeof(w)=="undefined")
+				{
+					w=new Worker("js/demo_workers.js");
+				}
+				w.onmessage = function (event) {
+					f(event);
+					document.getElementById("result").innerHTML=event.data;
+				};
+			}
+			else
+			{
+			document.getElementById("result").innerHTML="Sorry, your browser does not support Web Workers...";
+			}
+		}
+
+		function stopWorker()
+		{ 
+			w.terminate();
+		}
+		$(document).ready(function(){
+			$("#startworkdiv").click(function(){
+				startWorker(function(e){
+					var pos=parseInt(e.data);
+					var div = parseInt($(".progressdiv").width());
+					var newpos=parseInt(pos*1.0/100*div);
+					$(".progressdiv>div").css("left",newpos+"px");
+					$(".progressdiv2>div").width(newpos+"px");
+				});
+			});
+			
+			$("#stopworkdiv").click(function(){
+				stopWorker();
+			});
+		});
+	</script>
+</head>
+<body>
+
+<p>计数: <output id="result"></output></p>
+<div class="progressdiv" style="background-color:#eee;height:5px;margin-bottom:30px;position:relative;">
+	<div style="position:absolute;width:6px;height:15px;top:-5px;left:10px;background-color:#ddd;"></div>
+</div>
+
+<div class="progressdiv2" style="background-color:#eee;height:5px;margin-bottom:30px;position:relative;">
+	<div style="position:absolute;width:0px;height:5px;top:0px;left:0px;background-color:#ff0000;"></div>
+</div>
+<button id="startworkdiv">开始 Worker</button> 
+<button id="stopworkdiv">停止 Worker</button>
+<br /><br />
+
+</body>
+</html>

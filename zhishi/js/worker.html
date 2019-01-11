@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+	div{display:inline-block;width:100%;height:30px;}
+</style>
+<script type="text/javascript" src="jquery-1.8.1.js"></script>
+<script type="text/javascript">
+	var workerobj;
+	$(document).ready(function(){
+			workerobj  =  new Worker("js/worker.js");
+			workerobj.onmessage=function(event){
+				$(".show").html("您获取分线程的结果是："+event.data+";恭喜！");
+		}
+	});
+</script>
+</head>
+<body>
+
+<br><div class="show"></div>
+</body>
+
+</html>

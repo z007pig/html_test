@@ -1,0 +1,102 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{margin:10px auto;}
+		</style>
+		<script src="js/jquery.js"></script>
+		<script>
+			
+			var arr = new Array();
+			function drawLines(arr)
+			{
+				var tempCanvas = document.getElementById("tempCanvas");
+				var tempcontext = tempCanvas.getContext("2d");
+				tempcontext.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+				// 设置线的宽度
+				
+				
+				
+				//  最左边的是 miter 样式
+				tempcontext.beginPath();
+				tempcontext.moveTo(0, 400);
+				for(i in arr)
+				{
+					var value = arr[i];
+					tempcontext.lineTo(i*2, 400-parseInt(value*60));
+				}
+				tempcontext.lineTo((arr.length-1)*2, 400);
+				tempcontext.lineTo(0, 400);
+				tempcontext.strokeStyle = "#292900";
+				tempcontext.lineJoin = "round";
+				tempcontext.fillStyle = "#292900";
+				tempcontext.fill();
+				tempcontext.lineWidth = 1;
+				tempcontext.stroke();
+				
+				tempcontext.lineWidth = 4;
+				//  最左边的是 miter 样式
+				tempcontext.beginPath();
+				//tempcontext.moveTo(0, 400);
+				for(i in arr)
+				{
+					var value = arr[i];
+					tempcontext.lineTo(i*2, 400-parseInt(value*60));
+				}
+				tempcontext.strokeStyle = "#cdcc00";
+				tempcontext.lineJoin = "round";
+				tempcontext.stroke();
+				
+				var canvas = document.getElementById("myCanvas");
+				var context = canvas.getContext("2d");
+				context.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+				context.drawImage(tempCanvas, 0, 0);
+			}
+			var ii=0;
+			var timelength=64;
+			var alltime=2000;
+			function drawLineTimer()
+			{
+				var newarr=new Array();
+				for(i in arr)
+				{
+					newarr[i]=(ii+1)*arr[i]/timelength;
+				}
+				drawLines(newarr);
+				ii++;
+				if(ii==timelength-1)
+				{
+					clearInterval(currentTimer);
+				}
+				if(ii==1)
+				{
+					currentTimer = setInterval(drawLineTimer,alltime/timelength);
+				}
+			}
+			
+			$(document).ready(function(){
+			$.ajax({
+			   type: "POST",
+			   url: "getArray.php",
+			   data: "name=John&location=Boston",
+			   success: function(data){
+				// alert( "Data Saved: " + msg );
+				var obj = JSON.parse(data);
+				var stockdata = obj.quandl.data;
+				for(i in stockdata)
+				{
+					arr[i]=stockdata[i][1];
+				}
+			   }
+			});
+				drawLineTimer();
+			});
+		</script>
+	</head>
+		<body style="background-color:#000;">
+			<canvas id="myCanvas" width="840" height="430"></canvas>
+			<canvas id="tempCanvas" width="840" height="430" style="display:none"
+></canvas>
+		</body>
+</html>

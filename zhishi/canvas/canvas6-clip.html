@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			window.onload = function() {
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+			var x = canvas.width / 2;
+			var y = canvas.height / 2;
+			var radius = 75;
+			var offset = 50;
+			/*
+			* save()  的作用是在创建剪裁区之前将 canvas 的当前状态保存起来，
+			* 这样在后面就可以恢复上下文对象的原始状态了
+			*/
+			context.beginPath();
+			context.arc(x, y + offset, radius, 0, 2 * Math.PI, false);
+			context.fillStyle = "red";
+			context.fill();
+			
+			context.save();
+			context.beginPath();
+			context.arc(x, y, radius, 0, 2 * Math.PI, false);
+			context.clip();
+			// 在剪裁区内部画一个蓝色的源圆圈
+			context.beginPath();
+			context.arc(x - offset, y - offset, radius, 0, 2 * Math.PI,
+			false);
+			context.fillStyle = "blue";
+			context.fill();
+			// 在剪裁区内部画一个黄色的源圆圈
+			context.beginPath();
+			context.arc(x + offset, y, radius, 0, 2 * Math.PI, false);
+			context.fillStyle = "yellow";
+			context.fill();
+			// 在剪裁区内部画一个红色的源圆圈
+			context.beginPath();
+			context.arc(x, y + offset, radius, 0, 2 * Math.PI, false);
+			context.fillStyle = "red";
+			context.fill();
+			/*
+			* restore()  方法使 canvas 上下文对象恢复到创建剪裁区之前的状态
+			*/
+			context.restore();
+			context.beginPath();
+			context.arc(x, y, radius, 0, 2 * Math.PI, false);
+			context.lineWidth = 3;
+			context.strokeStyle= "black";
+			context.stroke();
+			
+			
+			};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="200"></canvas>
+		</body>
+</html>

@@ -1,0 +1,43 @@
+#deletedatabase
+{
+	width:100px;
+	border:1px solid #888;
+	background-color:#eee;
+	margin-bottom:20px;
+	text-align:center;
+	float:right;
+	cursor: pointer;
+}
+#showdiv
+{
+	margin-top:20px;
+}
+#showdiv>table
+{
+	width:100%;
+	border:1px solid #0000ee;
+}
+#addbutton , #updatebutton
+{
+	border:1px solid #999;
+	display:inline;
+	margin-left:10px;
+}
+
+#updatebutton
+{
+	display:none;
+}
+#showdiv>table td
+{
+	border:1px solid #888888;
+	height:30px;
+	line-height:30px;
+	padding-left:5px;
+}
+
+#showdiv>table td span
+{
+	cursor: pointer;
+	margin-right:20px;
+}

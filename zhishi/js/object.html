@@ -1,0 +1,92 @@
+<html>
+	<head>
+	<script type="text/javascript" src="jquery-1.8.1.js">
+		
+	</script>
+	<script type="text/javascript">
+		//1¡¢
+		var person = {"name":"xiaofang","age":"12","address":"shanghai"};
+		var name = person.name;
+		//2¡¢
+		var p = new Object();
+		p.name ="xiaofang";
+		p.age=12;
+		p.address="shanghai";
+		p.sayName=function(){
+			alert(this.name);
+		};
+		//p.sayName();
+		//3¡¢
+		function creatPerson(name,age,address){
+			var pp = new Object();
+			pp.name =name;
+			pp.age=age;
+			pp.address=address;
+			pp.sayName=function(){
+				alert(this.name);
+			};
+			return pp;
+		}
+		var pp = creatPerson("wangming",16,"wuhan");
+		pp.sayName();
+		function Hello(){
+			this.a = "hello";
+			alert(this.a);
+		}
+	//	Hello();
+		//4¡¢
+		function Person(name,age,address)
+		{
+			this.name = name;
+			this.age=age;
+			this.address=address;
+			this.sayName = function(){
+				alert(this.name);
+			}
+		}
+		var ppp = new Person("wangming",16,"wuhan");
+		//ppp.sayName();
+		Person("wangming",16,"wuhan");
+		window.sayName();
+		//ÓÐÄÄÐ©ÊôÐÔ£ºname¡¢age¡¢address
+		/*
+			class Person{
+				String name;
+				int age;
+				String address;
+				
+				void sayName()
+				{
+					System.out.print(this.name);
+				}
+			}
+			
+			
+			Object person = new Person("xiaofang",12,"shanghai");
+			String name = ((Person)person).name;
+			String pStr = person.toJson();
+		*/
+		$(document).ready(function(){
+			
+		});
+	</script>
+	</head>
+	<body>
+		<div class="show">
+		</div>
+		<div class="while">
+		</div>
+		<div class="person">
+		</div>
+		<div class="switch">
+		</div>
+		<div class="add">
+		</div>
+		<div class="outmost">
+		</div>
+		<div class="color1">
+		</div>
+		<div class="color2">
+		</div>
+	</body>
+</html>

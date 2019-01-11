@@ -1,0 +1,25 @@
+<html>
+<head>
+    <style type="text/css">
+        #myCanvas{
+			width:200px;
+			height:100px;
+            border: 1px solid red;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="myCanvas">
+    your browser does not support the canvas tag
+</canvas>
+<script type="text/javascript">
+    var c=document.getElementById("myCanvas");
+    var cxt=c.getContext("2d");
+    cxt.fillStyle="#FF0000";
+    cxt.fillRect(0,0,200,75);
+</script>
+</body>
+</html>
+
+

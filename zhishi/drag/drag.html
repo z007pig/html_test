@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+#div1, #div2,#div3
+{float:left; width:300px; height:300px; margin:10px;border:1px solid #ff0000;}
+#drag1{background:url("drag.png");width:300px; height:300px}
+</style>
+<script type="text/javascript">
+function dragover(ev)
+{
+	ev.preventDefault();
+}
+
+function dragstart(ev)
+{
+	ev.dataTransfer.setData("drag",ev.target.id);
+}
+
+function drop(ev)
+{
+	ev.preventDefault();
+	var data=ev.dataTransfer.getData("drag");
+	var dragobject = document.getElementById(data);
+	//dragobject.draggable=false;
+	//dragobject.ondragstart=function(){};
+	ev.target.appendChild(dragobject);
+}
+</script>
+</head>
+<body>
+
+<div id="div1" ondrop="drop(event)" ondragover="dragover(event)">
+  <div draggable="true" ondragstart="dragstart(event)" id="drag1" ></div>
+</div>
+<div id="div2" ondrop="drop(event)" ondragover="dragover(event)"></div>
+<div id="div3" ondrop="drop(event)" ondragover="dragover(event)"></div>
+</body>
+</html>

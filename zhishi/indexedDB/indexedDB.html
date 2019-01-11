@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>IndexedDB</title>
+<script type="text/javascript">
+
+/**
+ * It's important to note that IndexedDB doesn't work for content loaded into a frame 
+ * from another site (either <frame> or <iframe>. This is a security measure.
+ */
+if (!window.indexedDB) {
+	window.indexedDB = window.mozIndexedDB || window.webkitIndexedDB;
+}
+
+var db = null;
+
+var request = indexedDB.open("MyTestDatabase");
+
+var customerData = [
+		{ssn: "444-44-4444", name: "Bill", age: 25, email: "bill@company.com", nickName: ["1", "2", "3"]},
+		{ssn: "555-55-5555", name: "Donna", age: 34, email: "donna@home.org"},
+		{ssn: "666-66-6666", name: "Jack", age: 14, email: "jack@sina.com.cn"}
+	];
+
+request.onsuccess = function(e) {
+	// Obtain IDBDatabase 
+	// VERSION_CHANGE transaction callback
+	db = request.result;
+	
+	if (db.version != "1.0") {
+		var requestVersion = db.setVersion("1.0");
+		requestVersion.onerror = function(event) {
+			alert(event);
+		}
+		requestVersion.onsuccess = function(event) {
+			createObjectStore(db);
+			showDataByCursor();
+		}
+	} else {
+		showDataByCursor();
+	}
+	
+	//db.close();
+};
+
+/**
+ * Create object store 
+ */
+function createObjectStore(db) {
+
+	if (db.objectStoreNames.contains('customers')) {
+		db.deleteObjectStore("customers")
+	}
+	// Create Object Store
+	// This method was not called from a VERSION_CHANGE transaction callback.
+	var objectStore = db.createObjectStore("customers", {
+		// primary key
+		keyPath: "ssn",
+		// auto increment
+		autoIncrement: false
+	});
+	
+	objectStore.createIndex("name", "name", { unique: false });
+	
+	objectStore.createIndex("email", "email", { unique: true });
+	
+	// Add initial data
+	for (var index = 0; index < customerData.length; index++) {
+		objectStore.add(customerData[index]);
+	}
+}
+
+request.onerror = function(e) {
+    alert("Database error: " + e.target.errorCode);
+};
+
+function saveOrUpdate() {
+	/**
+	 * IDBTransaction.READ_ONLY: 0
+	 * IDBTransaction.READ_WRITE: 1
+	 * IDBTransaction.VERSION_CHANGE: 2
+	 */
+	var transaction = db.transaction(["customers"], IDBTransaction.READ_WRITE);
+	// Obtain object store by transaction
+	var objectStore = transaction.objectStore("customers");
+
+	var requestData = objectStore.get(document.getElementById("ssn").value);
+	requestData.onerror = function(event) {
+		alert(event);
+	}
+	
+	requestData.onsuccess = function(event) {
+		if (event.target.result) {
+			objectStore.delete(document.getElementById("ssn").value);
+		}
+		
+		var requestAdd = objectStore.add({
+			ssn: document.getElementById("ssn").value,
+			name: document.getElementById("name").value,
+			age: document.getElementById("age").value,
+			email: document.getElementById("email").value
+		});
+		requestAdd.onerror = function(event) {
+			alert("invalid data");
+		};
+		requestAdd.onsuccess = function(event) {
+			showDataByCursor(objectStore);
+		};
+	}
+}
+
+function deleteData() {
+	/**
+	 * IDBTransaction.READ_ONLY: 0
+	 * IDBTransaction.READ_WRITE: 1
+	 * IDBTransaction.VERSION_CHANGE: 2
+	 */
+	var transaction = db.transaction(["customers"], IDBTransaction.READ_WRITE);
+
+	var objectStore = transaction.objectStore("customers");
+	
+	objectStore.get(document.getElementById("ssn").value).onsuccess = function(event) {
+		
+		if (event.target.result) {
+			objectStore.delete(document.getElementById("ssn").value);
+			showDataByCursor(objectStore);
+		} else {
+			alert("NO_DATA");
+		}
+	}
+}
+
+function deleteAllData() {
+	/**
+	 * IDBTransaction.READ_ONLY: 0
+	 * IDBTransaction.READ_WRITE: 1
+	 * IDBTransaction.VERSION_CHANGE: 2
+	 */
+	var transaction = db.transaction(["customers"], IDBTransaction.READ_WRITE);
+
+	var objectStore = transaction.objectStore("customers");
+	
+	objectStore.clear();
+	
+	showDataByCursor(objectStore);
+}
+
+function showDataByCursor(objectStore) {
+
+	if (!objectStore) {
+		/**
+		 * IDBTransaction.READ_ONLY: 0
+		 * IDBTransaction.READ_WRITE: 1
+		 * IDBTransaction.VERSION_CHANGE: 2
+		 */
+		var transaction = db.transaction(["customers"], IDBTransaction.READ_WRITE);
+		
+		// Obtain object store by transaction
+		objectStore = transaction.objectStore("customers");
+	}
+	
+	document.getElementById("objectStoreName").innerHTML = objectStore.name;
+	document.getElementById("keyPath").innerHTML = objectStore.keyPath;
+	if (objectStore.indexNames) {
+		var indexNames = document.getElementById("indexNames");
+		indexNames.innerHTML = "";
+		var indexNameList = objectStore.indexNames;
+		for (var index = 0; index < indexNameList.length; index++) {
+			indexNames.innerHTML += "[" + indexNameList[index] + "]";
+		}
+	}
+	
+	if (document.getElementById("isUseGetAll").checked) {
+		/**
+		 * Warning: The following function(getAll) is not part of the IndexedDB standard!
+		 */
+		objectStore.getAll().onsuccess = function(event) {
+			var customerFromDb = event.target.result
+			var listTable = document.getElementById("list");
+			
+			while (listTable.childNodes.length > 0) {
+				listTable.removeChild(listTable.childNodes[0]);
+			}
+			
+			for (var index = 0; index < customerFromDb.length; index++) {
+				addRow(listTable, null, customerFromDb[index]);
+			}
+		};
+	} else {
+		
+		/**
+		 * Get all datas by cursor
+		 */
+		var listTable = document.getElementById("list");
+		
+		while (listTable.childNodes.length > 0) {
+			listTable.removeChild(listTable.childNodes[0]);
+		}
+		
+		objectStore.openCursor().onsuccess = function(event) {
+			
+			var cursor = event.target.result;
+			
+			if (cursor) {
+				var key = cursor.key;
+				var rowData = cursor.value;
+				addRow(listTable, key, rowData);
+				cursor.continue();
+			}
+		}
+	}
+}
+
+function showDataByIndex() {
+	
+	// Obtain transaction
+	var transaction = db.transaction(["customers"]);
+	
+	// Obtain object store by transaction
+	var objectStore = transaction.objectStore("customers");
+	
+	var listTable = document.getElementById("list");
+	
+	while (listTable.childNodes.length > 0) {
+		listTable.removeChild(listTable.childNodes[0]);
+	}
+	//var boundKeyRange = IDBKeyRange.only("Bill");
+	//var boundKeyRange = IDBKeyRange.lowerBound("Bill", false);
+	var boundKeyRange = IDBKeyRange.upperBound("Jack", false);
+	//var boundKeyRange = IDBKeyRange.bound("Bill", "Jack", false, true);
+	
+	/**
+	 * IDBCursor.NEXT
+	 * IDBCursor.NEXT_NO_DUPLICATE
+	 * IDBCursor.PREV
+	 * IDBCursor.PREV_NO_DUPLICATE
+	 */
+	objectStore.index("name").openCursor(boundKeyRange, IDBCursor.PREV_NO_DUPLICATE).onsuccess = function(event) {
+		var cursor = event.target.result;
+		
+		if (!cursor) {
+			return;
+		}
+		
+		var rowData = cursor.value;
+		
+		addRow(listTable, null, rowData);
+		cursor.continue();
+	};
+}
+
+function addRow(listTable, key, rowData) {
+	var row = document.createElement("div");
+	if (listTable.childNodes.length % 2 == 0) {
+		row.style.backgroundColor = "#BCD";
+	}
+	if (listTable.childNodes.length > 0) {
+		row.style.borderTopStyle = "solid";
+		row.style.borderWidth = "1px";
+		row.style.borderColor = "#888888";
+	}
+	row.style.cursor = "pointer";
+	row.style.width = "610px";
+	
+	addCol(row, rowData.ssn, "150px");
+	addCol(row, rowData.name, "120px");
+	addCol(row, rowData.age, "40px");
+	addCol(row, rowData.email, "150px");
+	
+	if (rowData.nickName) {
+		addCol(row, "[" + rowData.nickName.join(",") + "]", "150px");
+	}
+	
+	row.onclick = function(e) {
+		
+		var cols = row.getElementsByTagName("span");
+		
+		document.getElementById("ssn").value = cols[0].textContent;
+		document.getElementById("name").value = cols[1].textContent;
+		document.getElementById("age").value = cols[2].textContent;
+		document.getElementById("email").value = cols[3].textContent;
+	}
+	listTable.appendChild(row);
+}
+
+function addCol(row, value, width) {
+	var colDiv = document.createElement("span");
+	var textNode = document.createTextNode(value);
+	colDiv.style.display = "inline-block";
+	colDiv.style.width = width;
+	colDiv.appendChild(textNode);
+	row.appendChild(colDiv);
+}
+</script>
+</head>
+<body>
+	<div>
+		<span>ssn:</span><span><input type="text" id="ssn"></span>
+		<span>name:</span><span><input type="text" id="name"></span>
+		<span>age:</span><span><input type="range" min="1" max="100" step="10" id="age" ></span>
+		<span>email:</span><span><input type="email" id="email"></span>
+		<input type="button" value="SaveAndUpdate" onclick="saveOrUpdate();">
+		<input type="button" value="Delete Data" onclick="deleteData();">
+		<input type="button" value="Delete All Data" onclick="deleteAllData();">
+		<input type="button" value="Select By Index" onclick="showDataByIndex();">
+		<br />
+		<input type="checkbox" name="isUseGetAll" id="isUseGetAll"><label for="isUseGetAll">Use getAll</label>
+	</div>
+	<div>
+		<span>objectStoreName:</span><span id="objectStoreName"></span>
+	</div>
+	<div>
+		<span>keyPath:</span><span id="keyPath"></span>
+	</div>
+	<div>
+		<span>indexNames:</span><span id="indexNames"></span>
+	</div>
+	<div id="list"></div>
+</body>
+</html>

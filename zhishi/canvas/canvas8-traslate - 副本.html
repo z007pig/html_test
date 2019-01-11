@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			window.onload = function() {
+				var canvas = document.getElementById("myCanvas");
+				var context = canvas.getContext("2d");
+				var centerX = 0;
+				var centerY = 0;
+				var radius = 50;
+				// 保存状态
+				context.save();
+				// 移动原点
+				context.translate(canvas.width / 2, canvas.height / 2);
+				// 水平缩放
+				context.scale(2, 1);
+				// 这里画的圆会被拉伸成椭圆
+				context.beginPath();
+				context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+				// 恢复原始状态
+				context.restore();
+				// 应用样式
+				context.fillStyle = "#8ED6FF";
+				context.fill();
+				context.lineWidth = 5;
+				context.strokeStyle = "black";
+				context.stroke();
+			};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="200"></canvas>
+			
+		</body>
+</html>

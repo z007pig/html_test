@@ -1,0 +1,108 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+	div{display:inline-block;width:100px;height:30px;}
+</style>
+<script type="text/javascript" src="jquery-1.8.1.js"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+<div class="draw">绘制</div><div class="drag">拖动</div><div class="red">红色</div><div class="blue">蓝色</div><br>
+<canvas onMouseMove="mouseOver(this)" onmousedown="mouseDown(this)" onmouseup="mouseUp(this)" id="myCanvas" width="800" height="500" style="border:1px solid #888"></canvas>
+<script type="text/javascript">
+	localStorage.typecolor="red";
+	localStorage.mousedown="false";
+	var circle;
+	function Point(p1,p2)
+	{
+		this.x=p1;
+		this.y=p2;
+	}
+	var firstPoint = new Point();
+	var endPoint = new Point();
+	
+	function mouseOver(e)
+	{
+		$(".show").html("mouseOver,x:"+window.event.offsetX+";y:"+window.event.offsetY+localStorage.mousedown);
+		var tempPoint = new Point();
+		tempPoint.x=window.event.offsetX;
+		tempPoint.y=window.event.offsetY;
+		
+
+		if(localStorage.mousedown=="true")
+		{
+			if(localStorage.type=="draw")
+			{
+				var point = new Point((firstPoint.x+tempPoint.x)/2,(firstPoint.y+tempPoint.y)/2);
+				var radius=Math.abs((firstPoint.x-tempPoint.x)/2);
+				$(".show").append(radius);
+				var color=localStorage.typecolor;
+				var c=document.getElementById("myCanvas");
+				var cxt=c.getContext("2d");
+				cxt.clearRect(0,0,800,500);
+				circle = new Circle(point,radius,localStorage.typecolor);
+				circle.drawCircle(cxt);
+			}
+			if(localStorage.type=="drag")
+			{
+				circle.point.x+=tempPoint.x-endPoint.x;
+				circle.point.y+=tempPoint.y-endPoint.y;
+				var c=document.getElementById("myCanvas");
+				var cxt=c.getContext("2d");
+				cxt.clearRect(0,0,800,500);
+				circle.drawCircle(cxt);
+			}
+		}
+		endPoint=tempPoint;
+	}
+	function mouseDown(e)
+	{
+		localStorage.mousedown=true;
+		$(".show").html("mouseDown,x:"+window.event.offsetX+";y:"+window.event.offsetY);
+		endPoint.x=firstPoint.x=window.event.offsetX;
+		endPoint.y = firstPoint.y=window.event.offsetY;
+	}
+	function mouseUp(e)
+	{
+		localStorage.mousedown=false;
+		$(".show").html("mouseUp,x:"+window.event.offsetX+";y:"+window.event.offsetY);
+		endPoint.x=window.event.offsetX;
+		endPoint.y=window.event.offsetY;
+	}
+	function Circle(point,radius,color)
+	{
+		this.point = point;
+		this.radius= radius;
+		this.color=color;
+		this.drawCircle = function(cxt)
+		{
+			cxt.fillStyle=this.color;
+			cxt.beginPath();
+			cxt.arc(this.point.x,this.point.y,this.radius,0,Math.PI*2,false);
+			cxt.closePath();
+			cxt.fill();
+		}
+	}
+	$(document).ready(function(){
+		$(".draw").click(function(){
+			localStorage.type="draw";
+		});
+		$(".drag").click(function(){
+			localStorage.type="drag";
+		});
+		$(".red").click(function(){
+			localStorage.typecolor="red";
+		});
+		$(".blue").click(function(){
+			localStorage.typecolor="blue";
+		});
+	});
+</script>
+</script>
+<br><div class="show"></div>
+</body>
+
+</html>

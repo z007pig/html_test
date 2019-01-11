@@ -1,0 +1,200 @@
+body{
+	margin:0;
+    min-width:835px;
+}
+.imageController{
+	width:100%;
+	height:100%;
+	border:1px solid #ccc;
+	float:left;
+}
+.chooseFile{
+	height:25px;
+	border-bottom:1px solid #ccc;
+}
+.chooseFileBtn{
+	float:left;
+	height:20px;
+	margin:2px 2px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+}
+.chooseFileIn{
+	height:25px;
+	padding-top:2px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+}
+.imageView{
+	height:100%;
+	overflow:auto;
+}
+.imageInput{
+	/*
+	width:100%;
+	height:90%;
+	*/
+}
+.mapController{
+	width:100%;
+	height:100%;
+	border:1px solid #ccc;
+	border-left:none;
+}
+.mapTop{
+	width:100%;
+	height:30px;
+}
+.addMap{
+	float:left;
+	height:20px;
+	margin:2px 10px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+}
+.saveMap{
+	display:inline-block;
+	float:right;
+	height:20px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	margin-right:20px;
+	margin-top:2px;
+}
+.mapDetail{
+	border:1px solid #ccc;
+	margin-left:10px;
+	margin-right:20px;
+}
+.mapLocation{
+	width:100%;
+	height:20px;
+}
+.mapFocus{
+	float:left;
+	height:12px;
+	width:12px;
+	border-radius:6px;
+	border:none;
+	outline:none;
+	margin-left:10px;
+	margin-top:4px;
+}
+.mapName{
+	float:left;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	height:20px;
+	margin-left:10px;
+	line-height:20px;
+	border-right:1px solid #ccc;	
+	display:inline-block;
+}
+.mapLocationDetail{
+	float:left;
+	margin-left:auto;
+}
+.locationDetail{
+	float:left;
+	height:20px;
+	padding-top:2px;
+}
+.mapDetailName{
+	display:inline-block;
+	float:left;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	line-height:16px;
+	margin-left:4px;
+}
+.marLengthNum{
+	display:inline-block;
+	float:left;
+	height:16px;
+	margin-left:2px;
+	width:30px;
+}
+.addEvent{
+	float:right;
+	margin-right:5px;
+	height:18px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	margin-top:1px;
+}
+.mapDetailList{
+	margin-left:10px;
+	margin-right:20px;
+	border:1px solid #ccc;
+}
+.mapDetailLine{
+	height:22px;
+	border-bottom:1px solid #ccc;
+}
+.eventNum{
+	float:left;
+	display:inline-block;
+	height:20px;
+	line-height:20px;
+	width:3%;
+	text-align:center;
+	font-family:Microsoft YaHei;
+	font-size:16px;
+	border-right:1px solid #000;
+}
+.eventClass{
+	float:left;
+	display:inline-block;
+	width:17%;
+	height:20px;
+	border-right:1px solid #ccc;
+}
+select{
+	float:left;
+	margin-left:5px;
+	border-bottom:none;
+	border-radius:2px;
+	font-size:12px;
+	font-family:Microsoft YaHei;
+}
+.titleName{
+	float:left;
+	display:inline-block;
+	width:30%;
+	height:20px;
+	border-right:1px solid #000;
+}
+span{
+	 float:left;
+	 display:inline-block;
+	 font-family:Microsoft YaHei;
+	 font-size:12px;
+	 margin-left:5px;
+}
+.chooseResource{
+	display:inline-block;
+	float:left;
+	width:35%;
+	height:20px;
+	border-right:1px solid #000;
+}
+.chooseResourceBtn{
+	display:inline-block;
+	float:right;
+	height:20px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	margin-right:10px;
+}
+.deleteEvent{
+	float:right;
+	display:inline-block;
+}
+.deleteEventBtn{
+	margin-right:5px;
+	font-family:Microsoft YaHei;
+	font-size:12px;
+	height:20px;
+}
+
+

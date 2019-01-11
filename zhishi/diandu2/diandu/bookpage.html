@@ -1,0 +1,154 @@
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" href="skin/css/bootstrap.css"></link>
+	<link rel="stylesheet" href="skin/css/bookpage.css"></link>
+	<script type="text/javascript" src="skin/js/jquery.js"></script>
+	<script type="text/javascript" src="skin/js/jquery-form.js"></script>
+	<script src="skin/js/bootstrap.js"></script>
+	<script src="skin/js/bookpage.js"></script>
+</head>
+<body>
+<div class="row">
+<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="margin:0;padding:0;">
+	<div class="imageController">
+		<div class="chooseFile">
+			<form method="post"  enctype="multipart/form-data" action="upimg.php">
+				<input name="img" type="file" value="选择文件" class="chooseFileBtn"/>
+				<input name="submit" type="button" value="上传" class="upload"></input>
+				<input class="drawrect" type="button"  value="绘制矩形" ></input>
+			</form>
+			
+		</div>
+		
+		<div class="imageView">
+			<canvas class="imageInput"  id="myCanvas" width="600" height="300"></canvas>
+			<canvas class="imageInput" style="display:none" id="tempCanvas"  width="600" height="300"></canvas>
+			<canvas class="imageInput"  style="display:none" id="imageCanvas"  width="600" height="300"></canvas>
+		</div>
+	</div>
+</div>
+<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="margin:0;padding:0;">
+	<div class="mapController">
+		<div class="mapTop">
+			<button class="addMap">添加map</button>
+			<button class="saveMap">保存</button>
+		</div>
+		<div class="mapDetail">
+			<div class="mapLocation">
+				<button class="mapFocus"></button>
+				<div class="mapName">mapName</div>
+				<div class="mapLocationDetail">
+						<div class="locationDetail">
+							<div class="mapDetailName">left:</div>
+							<input class="marLengthNum"></input>
+						</div>							
+						<div class="locationDetail">
+							<div class="mapDetailName">top:</div>
+							<input class="marLengthNum"></input>
+						</div>										
+						<div class="locationDetail">
+							<div class="mapDetailName">width:</div>
+							<input class="marLengthNum"></input>
+						</div>				
+						<div class="locationDetail">
+							<div class="mapDetailName">height:</div>
+							<input class="marLengthNum"></input>
+						</div>
+				</div>
+				<button class="addEvent">添加事件</button>
+			</div>
+		</div>
+		<div class="mapDetailList">
+			<div class="mapDetailLine">
+				<div class="eventNum">1</div>
+				<div class="eventClass">
+					<select>
+					<option selected="true" disabled="true" >请选择</option>
+					<option>时间类型</option>
+					</select>
+				</div>
+				<div class="titleName">
+					<span>标题:</span>
+					<input style="height:20px;outline:none;float:right;width:60%;margin-right:10px;"></input>
+				</div>
+				<div class="chooseResource">
+					<input style="height:20px;outline:none;width:50%;float:left;margin-left:5px;"></input>
+					<button class="chooseResourceBtn">选择资源</button>
+				</div>
+				<div class="deleteEvent">
+					<button class="deleteEventBtn">删除事件</button>
+				</div>
+			</div>
+			<div class="mapDetailLine">
+				<div class="eventNum">2</div>
+				<div class="eventClass">
+					<select>
+					<option selected="true" disabled="true" >请选择</option>
+					<option>时间类型</option>
+					</select>
+				</div>
+				<div class="titleName">
+					<span>标题:</span>
+					<input style="height:20px;outline:none;float:right;width:60%;margin-right:10px;"></input>
+				</div>
+				<div class="chooseResource">
+					<input style="height:20px;outline:none;width:50%;float:left;margin-left:5px;"></input>
+					<button class="chooseResourceBtn">选择资源</button>
+				</div>
+				<div class="deleteEvent">
+					<button class="deleteEventBtn">删除事件</button>
+				</div>
+			</div>
+			<div class="mapDetailLine">
+				<div class="eventNum">3</div>
+				<div class="eventClass">
+					<select>
+					<option selected="true" disabled="true" >请选择</option>
+					<option>时间类型</option>
+					</select>
+				</div>
+				<div class="titleName">
+					<span>标题:</span>
+					<input style="height:20px;outline:none;float:right;width:60%;margin-right:10px;"></input>
+				</div>
+				<div class="chooseResource">
+					<input style="height:20px;outline:none;width:50%;float:left;margin-left:5px;"></input>
+					<button class="chooseResourceBtn">选择资源</button>
+				</div>
+				<div class="deleteEvent">
+					<button class="deleteEventBtn">删除事件</button>
+				</div>
+			</div>
+			<div class="mapDetailLine">
+				<div class="eventNum">4</div>
+				<div class="eventClass">
+					<select>
+					<option selected="true" disabled="true" >请选择</option>
+					<option>时间类型</option>
+					</select>
+				</div>
+				<div class="titleName">
+					<span>标题:</span>
+					<input style="height:20px;outline:none;float:right;width:60%;margin-right:10px;"></input>
+				</div>
+				<div class="chooseResource">
+					<input style="height:20px;outline:none;width:50%;float:left;margin-left:5px;"></input>
+					<button class="chooseResourceBtn">选择资源</button>
+				</div>
+				<div class="deleteEvent">
+					<button class="deleteEventBtn">删除事件</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+</body>
+</html>

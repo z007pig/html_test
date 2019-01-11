@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			window.onload = function() {
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+			// 开始用户图形的绘制
+			context.beginPath();
+			context.moveTo(170, 80);
+			context.bezierCurveTo(130, 100, 130, 150, 230, 150);
+			context.bezierCurveTo(250, 180, 320, 180, 340, 150);
+			context.bezierCurveTo(420, 150, 420, 120, 390, 100);
+			context.bezierCurveTo(430, 40, 370, 30, 340, 50);
+			context.bezierCurveTo(320, 5, 250, 20, 250, 50);
+			context.bezierCurveTo(200, 5, 150, 20, 170, 80);
+			// 完成用户图形的绘制
+			context.closePath();
+			context.lineWidth = 5;
+			context.strokeStyle = "blue";
+			// 创建径向渐变对象
+			var grd = context.createRadialGradient(238, 50, 20, 238, 50,
+			200);
+			// 设置渐变起始圆处的颜色
+			grd.addColorStop(0, "#8ED6FF");
+			// 设置渐变终止圆处的颜色
+			grd.addColorStop(1, "#004CB3");
+			context.fillStyle = grd;
+			context.fill();
+			context.stroke();
+		};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="200"></canvas>
+		</body>
+</html>

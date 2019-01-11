@@ -1,0 +1,42 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			window.onload = function(){
+				var imageObj = new Image();
+				imageObj.src = "drag.png";
+				imageObj.onload = function(){
+					drawImage(this);
+				};
+				
+				};
+				function drawImage(imageObj){
+					var canvas = document.getElementById("myCanvas");
+					var context = canvas.getContext("2d");
+					var destX = 0;
+					var destY = 0;
+					context.drawImage(imageObj, destX, destY);
+					var imageData = context.getImageData(0, 0, canvas.width,canvas.height);
+					var data = imageData.data;
+					for (var i = 0; i < data.length; i += 4) {
+					var brightness = (data[i]+data[i + 1]+data[i + 2])*0.333;
+					data[i] = brightness; // red
+					data[i + 1] = brightness; // green
+					data[i + 2] = brightness; // blue
+					// i+3  是 alpha 值
+					}
+					//imageData.data=data;
+					// 覆盖原数据
+					context.putImageData(imageData,0,0);
+			};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="400"></canvas>
+			
+		</body>
+</html>

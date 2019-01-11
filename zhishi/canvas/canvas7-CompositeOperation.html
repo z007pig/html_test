@@ -1,0 +1,72 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			var arr = new Array();
+			arr.push("source-atop");
+			arr.push("source-in");
+			arr.push("source-out");
+			arr.push("source-over");
+			arr.push("destination-atop");
+			arr.push("destination-in");
+			arr.push("destination-out");
+			arr.push("destination-over");
+			arr.push("lighter");
+			arr.push("darker");
+			arr.push("xor");
+			arr.push("copy");
+			
+			var currentTimer=0;
+			var i=0;
+			function drawCompositeOperation()
+			{
+				
+				var thisOperation = arr[i];
+				var canvas = document.getElementById("myCanvas");
+				var context = canvas.getContext("2d");
+				var x = canvas.width / 2;
+				var y = canvas.height / 2;
+				var tempCanvas = document.getElementById("tempCanvas");
+				var tempContext = tempCanvas.getContext("2d");
+				tempContext.clearRect(0, 0, canvas.width, canvas.height);
+				// 画矩形
+				tempContext.beginPath();
+				tempContext.rect(100, 100, 160, 160);
+				tempContext.fillStyle = "blue";
+				tempContext.fill();
+				
+				// 设置全局组合模式
+				tempContext.globalCompositeOperation = thisOperation;
+				// 画圆
+				tempContext.beginPath();
+				tempContext.arc(260, 260, 120, 0, 2 * Math.PI, false);
+				tempContext.fillStyle = "red";
+				tempContext.fill();
+				
+				//  将图像从 tempCanvas  拷贝到 myCanvas
+				context.drawImage(tempCanvas, 0, 0);
+				i++;
+				if(i==arr.length)
+				{
+					clearInterval(currentTimer);
+				}
+				if(i==1)
+				{
+					currentTimer = setInterval(drawCompositeOperation,1500);
+				}
+			}
+			window.onload = function() {
+				drawCompositeOperation()
+			};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="430"></canvas>
+			<canvas id="tempCanvas" width="508" height="430" style="display:none"
+></canvas>
+		</body>
+</html>

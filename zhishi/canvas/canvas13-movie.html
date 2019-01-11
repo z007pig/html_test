@@ -1,0 +1,70 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{margin:10px auto;}
+		</style>
+		<script src="js/jquery.js"></script>
+		<script>
+			function drawImage(ii)
+			{
+				ii++;
+				var imageObj = new Image();
+				var a0="";
+				if(parseInt(ii/1000)>0)
+				{
+					a0="";
+				}
+				else if(parseInt(ii/100)>0)
+				{
+					a0="0";
+				}
+				else if(parseInt(ii/10)>0)
+				{
+					a0="00";
+				}
+				else{
+					a0="000";
+				}
+				var url="images/img"+a0+ii+".jpg";
+				imageObj.src =url;
+				imageObj.onload = function() {
+					var canvas = document.getElementById("myCanvas");
+					var context = canvas.getContext("2d");
+					context.clearRect(0, 0, context.width, context.height);
+					context.beginPath();
+					//context.arc(200, 100, 50, 0, 2 * Math.PI, false);
+					//context.clip();
+					context.drawImage(this, 0, 0);
+				};
+
+				
+			}
+			var ii=0;
+			var maxi=705;
+			var timemid=180;
+			function drawImageTimer()
+			{
+				drawImage(ii);
+				ii++;
+				if(ii==maxi-1)
+				{
+					clearInterval(currentTimer);
+				}
+				if(ii==1)
+				{
+					currentTimer = setInterval(drawImageTimer,timemid);
+				}
+			}
+			
+			$(document).ready(function(){
+				drawImageTimer();
+			});
+		</script>
+	</head>
+		<body style="background-color:#000;">
+			<canvas id="myCanvas" width="500" height="281"></canvas>
+			
+		</body>
+</html>

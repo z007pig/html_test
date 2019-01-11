@@ -1,0 +1,89 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body{text-align:center;}
+			canvas{border:1px solid #f00;margin:10px auto;}
+		</style>
+		<script>
+			//$(document).ready(function(){
+			//});
+			window.onload = function() {
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+			// 在此 添加绘图代码
+				context.lineWidth = 5;
+				context.strokeStyle = '#0000ff';
+				
+				context.beginPath();
+				context.moveTo(10,10);
+				context.lineTo(200,100);
+				context.lineTo(300,100);
+				//context.lineTo(10,10);
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(10,150);
+				context.lineTo(400,150);
+				context.strokeStyle = '#ff00ff';
+				context.lineCap = "butt";
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(10,170);
+				context.lineTo(400,170);
+				context.lineCap = 'round';
+				context.strokeStyle = '#0000ff';
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(10,190);
+				context.lineTo(400,190);
+				context.lineCap = 'square';
+				context.strokeStyle = '#ff0000';
+				context.stroke();
+				
+				context.beginPath();
+				context.arc(400, 70, 50, 1.5*3.14, 0.5*3.14,
+				false);
+				context.lineWidth = 5;
+				// 设置线的颜色
+				context.strokeStyle = "black";
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(188, 150);
+				context.quadraticCurveTo(288, 250, 388, 150);
+				context.lineWidth = 10;
+				// line color
+				context.strokeStyle = "black";
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(188, 130);
+				context.bezierCurveTo(140, 10, 428, 10, 388, 170);
+				context.lineWidth = 10;
+				// 设置线的颜色
+				context.strokeStyle = "black";
+				context.stroke();
+				
+				context.beginPath();
+				context.moveTo(100, 20);
+				// 第一条直线
+				context.lineTo(200, 160);
+				// 二次曲线
+				context.quadraticCurveTo(230, 200, 250, 120);
+				// 贝塞尔曲线
+				context.bezierCurveTo(290, -40, 300, 200, 400, 150);
+				// 第二条直线
+				context.lineTo(500, 90);
+				context.lineWidth = 5;
+				context.strokeStyle = "blue";
+				context.stroke();
+			};
+		</script>
+	</head>
+		<body>
+			<canvas id="myCanvas" width="508" height="200"></canvas>
+		</body>
+</html>
