@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+table {
+border-collapse: collapse;
+}
+
+td {
+width: 200px;
+height: 50px;
+border: 1px solid #D9D9D9;
+}
+
+.grayColor {
+background: #f2f2f2;
+}
+</style>
+</head>
+
+<body>
+<textarea cols="" rows="" id="text"></textarea>
+<table>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td colspan="2"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td rowspan="2"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+jQuery.fn.extend({
+    autoHeight: function(){
+        return this.each(function(){
+			var $this = jQuery(this);
+			var scrollHeight = this.scrollHeight;
+            if( !$this.attr('_initAdjustHeight') ){
+                $this.attr('_initAdjustHeight', $this.outerHeight());
+            }
+            _adjustH(this).on('input', function(){
+                _adjustH(this);
+            });
+        });
+        /**
+         * 重置高度 
+         * @param {Object} elem
+         */
+        function _adjustH(elem){
+            var $obj = jQuery(elem);
+            return $obj.css({'height': $obj.attr('_initAdjustHeight'), 'overflow-y': 'hidden'})
+                    .height( elem.scrollHeight );
+        }
+    }
+});
+
+
+$('table').on('mousedown', 'td', function(e) {
+$('.grayColor').removeClass('grayColor');
+var startLeft = e.clientX;
+var startTop = e.clientY;
+var thatTd_ = $(this);
+
+$(document).on('mousemove', function(e) {
+var moveLeft = e.clientX;
+var moveTop = e.clientY;
+// 动态生成选择区域时占位的碰撞检测块
+crashPlaceholder(moveLeft, moveTop, startLeft, startTop);
+// 元素碰撞检测
+elementCrash();
+// 处理有表格合并之后的的选择问题 通过检测高度来实现效果
+formMergeChoice(moveLeft, moveTop)
+});
+e.stopPropagation();
+})
+// 鼠标抬起事件
+$(document).on('mouseup', function(e) {
+$(document).unbind('mousemove');
+$('.show').remove();
+e.stopPropagation();
+});
+
+// 生成占位块
+function crashPlaceholder(A, B, C, D) {
+// 开始的行列
+var a = A > C ? C : A;
+var b = B > D ? D : B;
+
+$('.show').remove();
+$('body').append('<div class="show"></div>');
+
+$('.show').css('width', Math.abs(A - C)).css('height', Math.abs(B - D)).css('position', 'fixed').css('left', a).css(
+'top', b).css('border', '1px dotted black');
+}
+// 碰撞检测
+function elementCrash() {
+$('table td').each(function() {
+$(this).removeClass('grayColor');
+// 碰撞检测
+var t1 = $(this).offset().top;
+var l1 = $(this).offset().left;
+var r1 = $(this).offset().left + $(this).innerWidth();
+var b1 = $(this).offset().top + $(this).innerHeight();
+
+var t2 = $('.show').offset().top;
+var l2 = $('.show').offset().left;
+var r2 = $('.show').offset().left + $('.show').innerWidth();
+var b2 = $('.show').offset().top + $('.show').innerHeight();
+
+if (b1 < t2 || l1 > r2 || t1 > b2 || r1 < l2) {
+$(this).removeClass('grayColor');
+} else {
+$(this).addClass('grayColor');
+}
+})
+}
+
+// 处理有表格合并之后的的选择问题 通过检测高度来实现效果
+function formMergeChoice() {
+var heightArr = [],
+heightArr1 = [],
+widthArr = [],
+widthArr1 = [];
+$('.grayColor').each(function() {
+heightArr.push($(this).offset().top);
+heightArr1.push($(this).offset().top + $(this).outerHeight());
+widthArr.push($(this).offset().left);
+widthArr1.push($(this).offset().left + $(this).outerWidth());
+})
+var minHeight = Math.min.apply(null, heightArr);
+var maxHeight = Math.max.apply(null, heightArr1);
+var minWidth = Math.min.apply(null, widthArr);
+var maxWidth = Math.max.apply(null, widthArr1);
+$('.show').outerHeight(maxHeight - minHeight - 3).outerWidth(maxWidth - minWidth).css('top', minHeight).css('left', minWidth);
+// 当改变碰撞占位检测块之后的高度和定位之后 再次进行碰撞检测
+elementCrash();
+
+$('.grayColor').each(function() {
+heightArr.push($(this).offset().top);
+heightArr1.push($(this).offset().top + $(this).outerHeight());
+widthArr.push($(this).offset().left);
+widthArr1.push($(this).offset().left + $(this).outerWidth());
+})
+var minHeight1 = Math.min.apply(null, heightArr);
+var maxHeight1 = Math.max.apply(null, heightArr1);
+var minWidth1 = Math.min.apply(null, widthArr);
+var maxWidth1 = Math.max.apply(null, widthArr1);
+
+// 递归函数
+if (minHeight == minHeight1 && maxHeight == maxHeight1 && minWidth == minWidth1 && maxWidth == maxWidth1) {
+return;
+} else {
+formMergeChoice();
+}
+}
+</script>
+
+</html>
